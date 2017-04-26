@@ -19,7 +19,8 @@ public class Main
 {
     private final static boolean READ_RESOURCE = true;
     private final static boolean CLOSE_READ_RESOURCE = true;
-    private final static boolean CLOSE_READ_FILE = false;
+    private final static boolean CLOSE_READ_FILE = true;
+    private final static boolean CLEAN_CLASSLOADER = true;
     
     public static void main(String[] args)
     {
@@ -97,8 +98,11 @@ public class Main
         System.err.println("Closed classloader: clazz=" + clazz);
         attemptDelete(destJar);
         
-        List<JarFile> openJars = ClassLoaderUtil.getOpenJarFiles(loader);
-        ClassLoaderUtil.clearJarFactoryCache(openJars);
+        if (CLEAN_CLASSLOADER)
+        {
+            List<JarFile> openJars = ClassLoaderUtil.getOpenJarFiles(loader);
+            ClassLoaderUtil.clearJarFactoryCache(openJars);
+        }
         
         attemptDelete(destJar);
         
